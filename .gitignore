@@ -1,6 +1,4 @@
 /build/
 private.properties
 *.xml
-=======
-*.xml
 /dist/
