@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 
 public class Conexion {
     
-    public Connection iniciarConexion(String server) throws SQLException {
+    public Connection iniciarConexion(String server, String pass) throws SQLException {
         Connection con;
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        con = DriverManager.getConnection(server, "root", "");
+        con = DriverManager.getConnection(server, "root", pass);
         return con;
     }
     
