@@ -11,25 +11,26 @@ import java.util.logging.Logger;
  */
 public class DatabaseErrorHandler {
     Conexion cn = new Conexion();
-    protected final String server1 = "192.168.43.87";
-    protected final String server2 = "192.168.43.123";
-    protected final String server3 = "192.168.43.23";
+    protected final String[] passwords = { "1234567", "1234567", "1234567" };
+    protected final String[] servers = { "jdbc:mysql:/172.16.3.92:3306/Biblioteca_Manny", "jdbc:mysql:/192.168.43.123:3306/Biblioteca_Manny", 
+    "jdbc:mysql:/192.168.43.23:3306/Biblioteca_Manny" };
     protected String database;
     
-    public boolean checkConnection(String server) {
+    public Connection checkConnection(String server, String pass) {
+        Connection con;
         try {
-            cn.iniciarConexion(server);
-            return true;
+            con = cn.iniciarConexion(server, pass);
+            return con;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return null;
         }
     }
     
-    public Connection retryConnection(String server) {
-        if(checkConnection(server)) {
+    public Connection retryConnection(String server, String pass) {
+        if(checkConnection(server, pass) == null) {
             try {
-                return cn.iniciarConexion(server);
+                return cn.iniciarConexion(server, pass);
             } catch (SQLException ex) {
                 Logger.getLogger(DatabaseErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
