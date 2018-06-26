@@ -11,10 +11,17 @@ import java.util.logging.Logger;
  */
 public class DatabaseErrorHandler {
     Conexion cn = new Conexion();
-    protected final String[] passwords = { "1234567", "1234567", "1234567" };
-    protected final String[] servers = { "jdbc:mysql:/192.168.43.87:3306/Biblioteca_Manny", "jdbc:mysql:/192.168.43.123:3306/Biblioteca_Manny", 
-    "jdbc:mysql:/192.168.43.23:3306/Biblioteca_Manny" };
-    protected String database;
+    protected final String[] passwords = { 
+        "1234567", 
+        "1234567", 
+        "1234567" 
+    };
+    
+    protected final String[] servers = { 
+        "jdbc:mysql://192.168.43.87:3306/Biblioteca_Manny", 
+        "jdbc:mysql://192.168.43.123:3306/Biblioteca_Manny", 
+        "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny" 
+    };
     
     public Connection checkConnection(String server, String pass) {
         Connection con;

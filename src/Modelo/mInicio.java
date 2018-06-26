@@ -9,10 +9,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+
 /**
  *
  * @author Vinicio
  */
+
 public class mInicio extends DatabaseErrorHandler {
     private Conexion conexion = new Conexion();
     
@@ -21,9 +23,7 @@ public class mInicio extends DatabaseErrorHandler {
             int i=0;
             Connection con;
             
-            while((con = checkConnection(servers[i], passwords[i])) == null && i < 3) {
-                i++;
-            }
+            con = checkConnection(servers[0], passwords[0]);
             
             if(con == null) {
                 System.out.println("Fallo en la conexión");
