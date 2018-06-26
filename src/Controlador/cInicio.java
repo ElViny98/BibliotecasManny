@@ -87,7 +87,6 @@ public class cInicio implements ActionListener{
             config.getParentFile().mkdirs();
             config.createNewFile();
         }
-        System.out.println(fileExist);
         return fileExist;
     }
    
@@ -137,7 +136,7 @@ public class cInicio implements ActionListener{
             if(!existeFichero()){
                 ventanaSucursal();
                 iniciarVista();
-                System.out.println("si");
+                System.out.println("");
             }
             else{
                 sucursal = leerFichero();
