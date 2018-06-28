@@ -3,7 +3,6 @@ package Controlador;
 import Modelo.mInicio;
 import Vista.vInicio;
 import Vista.vSucursal;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -21,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
 
 public class cInicio implements ActionListener{
@@ -36,13 +34,21 @@ public class cInicio implements ActionListener{
         vS.btnAceptar.addActionListener(this);
         this.vI.btnAgregar.addActionListener(this);
         this.vI.btnPrestamo.addActionListener(this);
+        this.vI.btnInventario.addActionListener(this);
+        this.vI.btnHistorial.addActionListener(this);
+        this.vI.btnGuardar.addActionListener(this);
     }
-    
-    
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.vI.btnGuardar) {
+            this.mI.insertarLibro(this.vI.txtTitLibro.getText(), this.vI.txtAutLibro.getText(),
+                    this.vI.txtPublic.getText(), this.vI.cmbGeneros.getSelectedItem().toString(),
+                    this.vI.txtNumCopias.getText(), this.vI.txtNumPaginas.getText());
+        }
+        
         if(e.getSource() == this.vI.btnAgregar) {
+            this.vI.pnlHistorial.setVisible(false);
             this.vI.pnlAgregar.setVisible(true);
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlPrestamos.setVisible(false);
@@ -50,9 +56,17 @@ public class cInicio implements ActionListener{
         }
         
         if(e.getSource() == this.vI.btnPrestamo) {
+            this.vI.pnlHistorial.setVisible(false);
             this.vI.pnlPrestamos.setVisible(true);
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlAgregar.setVisible(false);
+        }
+        
+        if(e.getSource() == this.vI.btnHistorial) {
+            this.vI.pnlHistorial.setVisible(true);
+            this.vI.pnlInicio.setVisible(false);
+            this.vI.pnlPrestamos.setVisible(false);
+            this.vI.pnlInventario.setVisible(false);
         }
         
         if(e.getSource() == this.vS.btnAceptar){
@@ -60,6 +74,14 @@ public class cInicio implements ActionListener{
                 escribirFichero(new File("src/File/config"));
                 iniciarVista();
             } catch (UnsupportedEncodingException ex) {}
+        }
+        
+        if(e.getSource() == this.vI.btnInventario) {
+            this.vI.pnlHistorial.setVisible(false);
+            this.vI.pnlInicio.setVisible(false);
+            this.vI.pnlPrestamos.setVisible(false);
+            this.vI.pnlInventario.setVisible(true);
+            this.vI.tblInventario.setModel(this.mI.getInventario());
         }
     }
     
@@ -109,10 +131,11 @@ public class cInicio implements ActionListener{
         else{
             vS.comboSucursales.setEnabled(false);
         }
-        vS.setResizable(true);
+        vS.setTitle("Sucursal");
+        vS.setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
+        vS.setResizable(false);
         vS.setLocationRelativeTo(null);
         vS.setVisible(true);
-        vS.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     
     public void iniciarVista() {
@@ -126,14 +149,16 @@ public class cInicio implements ActionListener{
             else{
                 sucursal = leerFichero();
                 if(sucursal!=null){
+                    this.vI.tblHistorial.setRowHeight(50);
+                    this.vI.tblInventario.setRowHeight(50);
                     this.vI.pnlPrestamos.setVisible(false);
                     this.vI.pnlAgregar.setVisible(false);
+                    this.vI.pnlInventario.setVisible(false);
+                    this.vI.pnlHistorial.setVisible(false);
                     this.vI.setLocationRelativeTo(null);
                     this.vI.setVisible(true);
                     this.vI.setResizable(false);
-                    ImageIcon l = new ImageIcon(getClass().getResource("/img/logo.png"));
-                    ImageIcon l2 = new ImageIcon(l.getImage().getScaledInstance(77, 77, Image.SCALE_DEFAULT));
-                    //this.vI.lblLogo.setIcon(l2);
+                    this.vI.setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
                 }
                 System.out.println(sucursal);
             }

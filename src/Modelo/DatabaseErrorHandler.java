@@ -18,7 +18,7 @@ public class DatabaseErrorHandler {
     };
     
     protected final String[] servers = { 
-        "jdbc:mysql://192.168.1.70:3306/Biblioteca_Manny", 
+        "jdbc:mysql://172.16.1.21:3306/Biblioteca_Manny", 
         "jdbc:mysql://192.168.43.123:3306/Biblioteca_Manny", 
         "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny" 
     };
