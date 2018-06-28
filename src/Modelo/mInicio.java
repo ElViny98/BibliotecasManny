@@ -22,8 +22,8 @@ public class mInicio extends DatabaseErrorHandler {
         try {
             int i=0;
             Connection con;
-            
-            con = checkConnection(servers[0], passwords[0]);
+            //Para conectarse a su base de datos primero debe obtener la información de una base de datos por defecto
+            con = firstConnection(servers[0], passwords[0]);
             
             if(con == null) {
                 System.out.println("Fallo en la conexión");

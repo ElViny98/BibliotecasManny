@@ -33,45 +33,28 @@ public class cInicio implements ActionListener{
         this.vI = vI;
         this.mI = mI;
         
-        /*this.vI.btnAgregar.addActionListener(this);
-        this.vI.btnInventario.addActionListener(this);
-        this.vI.btnHistorial.addActionListener(this);
-        this.vI.btnSucursales.addActionListener(this);
-        this.vI.btnPrestamo.addActionListener(this);*/
         vS.btnAceptar.addActionListener(this);
+        this.vI.btnAgregar.addActionListener(this);
+        this.vI.btnPrestamo.addActionListener(this);
     }
     
     
-    
-    private JComponent[] getComponentes() {
-        JComponent[] paneles = new JComponent[3];
-        /*paneles[0] = this.vI.pnlInicio;
-        paneles[1] = this.vI.pnlSaludo;*/
-        //paneles[2] = this.vI.pnlAgregar;
-        return paneles;
-    }
-    
-    public void setComponentVisible(JComponent v) {
-        for(int i=0; i<getComponentes().length; i++) {
-            if(v == getComponentes()[i]) {
-                v.setVisible(true);
-            }
-            else {
-                v.setVisible(false);
-            }
-        }
-    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-      /*  if(e.getSource() == this.vI.btnAgregar) {
-          //  setComponentVisible(this.vI.pnlAgregar);
+        if(e.getSource() == this.vI.btnAgregar) {
+            this.vI.pnlAgregar.setVisible(true);
+            this.vI.pnlInicio.setVisible(false);
+            this.vI.pnlPrestamos.setVisible(false);
             System.out.println("Clic 1");
         }
-        if(e.getSource() == this.vI.btnInventario) {
-            setComponentVisible(this.vI.pnlSaludo);
-            System.out.println("Clic 2 ");
-        }*/
+        
+        if(e.getSource() == this.vI.btnPrestamo) {
+            this.vI.pnlPrestamos.setVisible(true);
+            this.vI.pnlInicio.setVisible(false);
+            this.vI.pnlAgregar.setVisible(false);
+        }
+        
         if(e.getSource() == this.vS.btnAceptar){
             try {
                 escribirFichero(new File("src/File/config"));
@@ -124,10 +107,12 @@ public class cInicio implements ActionListener{
             vS.comboSucursales.setModel(new DefaultComboBoxModel(sucursales));
         }
         else{
-            vS.comboSucursales.disable();
+            vS.comboSucursales.setEnabled(false);
         }
+        vS.setResizable(true);
         vS.setLocationRelativeTo(null);
         vS.setVisible(true);
+        vS.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     
     public void iniciarVista() {
@@ -141,15 +126,16 @@ public class cInicio implements ActionListener{
             else{
                 sucursal = leerFichero();
                 if(sucursal!=null){
+                    this.vI.pnlPrestamos.setVisible(false);
+                    this.vI.pnlAgregar.setVisible(false);
+                    this.vI.setLocationRelativeTo(null);
                     this.vI.setVisible(true);
                     this.vI.setResizable(false);
                     ImageIcon l = new ImageIcon(getClass().getResource("/img/logo.png"));
                     ImageIcon l2 = new ImageIcon(l.getImage().getScaledInstance(77, 77, Image.SCALE_DEFAULT));
-                    this.vI.lblLogo.setIcon(l2);
+                    //this.vI.lblLogo.setIcon(l2);
                 }
                 System.out.println(sucursal);
-                
-                //setComponentVisible(this.vI.pnlSaludo);
             }
         } catch (IOException ex) {}
     }
