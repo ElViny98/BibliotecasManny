@@ -87,12 +87,14 @@ CREATE TABLE `sucursal` (
   `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) DEFAULT NULL,
   `Direccion` varchar(45) DEFAULT NULL,
+  `IP` varchar(15) DEFAULT NULL,
+  `Password` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`IdSucursal`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `sucursal` */
 
-insert  into `sucursal`(`IdSucursal`,`Nombre`,`Direccion`) values (1,'BiblioVini','Culiacan Av. Juarez'),(2,'BiblioBryan','Mazatlan, Av. Localhost'),(3,'Biblioteca el Aldas','Monterey Av. Lazaña Cardenas');
+insert  into `sucursal`(`IdSucursal`,`Nombre`,`Direccion`,`IP`,`Password`) values (1,'BiblioVini','Culiacan Av. Juarez','192.168.4.73','1234567'),(2,'BiblioBryan','Mazatlan, Av. Localhost','192.168.1.74','1234567'),(3,'Biblioteca el Aldas','Monterey Av. Lazaña Cardenas','192.168.1.73','1234567');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

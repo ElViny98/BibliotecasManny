@@ -28,6 +28,7 @@ public class cInicio implements ActionListener{
     mInicio mI = new mInicio();
     vSucursal vS = new vSucursal();
     String sucursal; 
+    String[][] sucursales;
     public cInicio(mInicio mI, vInicio vI) {
         this.vI = vI;
         this.mI = mI;
@@ -64,7 +65,6 @@ public class cInicio implements ActionListener{
             this.vI.pnlAgregar.setVisible(true);
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlPrestamos.setVisible(false);
-            System.out.println("Clic 1");
         }
         
         if(e.getSource() == this.vI.btnPrestamo) {
@@ -112,7 +112,32 @@ public class cInicio implements ActionListener{
     public void escribirFichero(File conf) throws UnsupportedEncodingException{
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
             new FileOutputStream(conf), "utf-8"))) {
-            writer.write(String.valueOf("Sucursal:"+vS.comboSucursales.getSelectedItem()));
+            this.sucursal = String.valueOf(vS.comboSucursales.getSelectedItem());
+            int sw = 0;
+            String id = "-1";
+            String id2 = "-1";
+            for (int i = 0; i < sucursales.length; i++) {
+                if(sucursales[i][1] == null ? this.sucursal == null : sucursales[i][1].equals(this.sucursal) && sw == 0){
+                    writer.write(String.valueOf("Sucursal:"+vS.comboSucursales.getSelectedItem()));
+                    writer.write("\nIpSucursal:"+sucursales[i][2]);
+                    writer.write("\nPassSucursal:"+sucursales[i][3]);
+                    sw = 1;
+                    id = sucursales[i][0];
+                    i= -1;
+                }               
+                else if( sw == 1 && !sucursales[i][0].equals(id)){
+                    writer.write(String.valueOf("\nSucursal2:"+sucursales[i][1]));
+                    writer.write("\nIpSucursal2:"+sucursales[i][2]); 
+                    writer.write("\nPassSucursal2:"+sucursales[i][3]);
+                    sw = 2;
+                    id2 = sucursales[i][0];
+                }
+                else if( sw == 2 && !sucursales[i][0].equals(id) && !sucursales[i][0].equals(id2)){
+                    writer.write(String.valueOf("\nSucursal3:"+sucursales[i][1]));
+                    writer.write("\nIpSucursal3:"+sucursales[i][2]); 
+                    writer.write("\nPassSucursal3:"+sucursales[i][3]);
+                }
+            }
          }       catch (IOException ex) {
             Logger.getLogger(cInicio.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -138,9 +163,13 @@ public class cInicio implements ActionListener{
     }
     
     public void ventanaSucursal(){
-        String[] sucursales = mI.obtenerSucursales();
-        if(sucursales != null){
-            vS.comboSucursales.setModel(new DefaultComboBoxModel(sucursales));
+        sucursales = mI.obtenerSucursales();
+        String[] nomSucursales = new String[sucursales.length];
+        for (int i = 0; i < sucursales.length; i++) {
+            nomSucursales[i] = sucursales[i][1];
+        }
+        if(nomSucursales != null){
+            vS.comboSucursales.setModel(new DefaultComboBoxModel(nomSucursales));
         }
         else{
             vS.comboSucursales.setEnabled(false);

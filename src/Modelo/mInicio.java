@@ -5,11 +5,17 @@
  */
 package Modelo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -19,22 +25,40 @@ import javax.swing.table.DefaultTableModel;
  * @author Vinicio
  */
 
-public class mInicio extends DatabaseErrorHandler {
+public class mInicio extends DatabaseErrorHandler implements Runnable {
     private Conexion conexion = new Conexion();
+    private int net;
+    private String ipserver1;
+    private String passserver1;
+    private String ipserver2;
+    private String passserver2;
+    private String ipserver3;
+    private String passserver3;
+    private boolean statusNetwork1 = true;
+    private boolean statusNetwork2 = true;
+    private boolean statusNetwork3 = true;
+ 
+    Runnable net1;
+    Runnable net2;
+    Runnable net3;
     
-    public String[] obtenerSucursales() {
+    public String[][] obtenerSucursales() {
         try {
             int i=0;
-            Connection con;
+            Connection con = null;
             //Para conectarse a su base de datos primero debe obtener la información de una base de datos por defecto
-            con = firstConnection(servers[0], passwords[0]);
+            while(con == null && i < 3)
+            {
+                con = firstConnection(servers[i], passwords[i]);
+                i++;
+            }
             
             if(con == null) {
                 System.out.println("Fallo en la conexión");
                 return null;
             }
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT IdSucursal,Nombre FROM sucursal");
+            ResultSet rs = s.executeQuery("SELECT IdSucursal,Nombre,IP,Password FROM sucursal");
             if(!rs.last()) {
                 System.out.println("No hay ninguna sucursal");
                 return null;
@@ -42,10 +66,13 @@ public class mInicio extends DatabaseErrorHandler {
             
             int numSuc = rs.getRow();
             rs.beforeFirst();
-            String[] arraySuc = new String[numSuc];
+            String[][] arraySuc = new String[numSuc][4];
             int x = 0;
             while(rs.next()) {
-                arraySuc[x] = rs.getString("Nombre");
+                arraySuc[x][0] = rs.getString("IdSucursal");
+                arraySuc[x][1] = rs.getString("Nombre");
+                arraySuc[x][2] = rs.getString("IP");
+                arraySuc[x][3] = rs.getString("Password");
                 x++;
             }
             
@@ -66,7 +93,8 @@ public class mInicio extends DatabaseErrorHandler {
      */
     public DefaultTableModel getPrestamos(int opc) {
         Connection con;
-        con = firstConnection(servers[0], passwords[0]);
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
         try {
             Statement st = con.createStatement();
             String query;
@@ -92,7 +120,8 @@ public class mInicio extends DatabaseErrorHandler {
     
     public DefaultTableModel getInventario() {
         Connection con;
-        con = firstConnection(servers[0], passwords[0]);
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
         try {
             Statement st = con.createStatement();
             String[] txtModelo = new String[]{"Titulo", "Autor" , "Año de publicación", "Género", "Copias totales", "Editorial", "Numero de páginas"};
@@ -146,7 +175,8 @@ public class mInicio extends DatabaseErrorHandler {
      */
     public boolean insertarLibro(String... datos) {
         Connection con;
-        con = firstConnection(servers[0] , passwords[0]);
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
         try {
             Statement st = con.createStatement();
             st.executeUpdate("INSERT INTO libro(Titulo, Autor, Anio, Genero, CopiasPrestadas, TotalCopias, Sucursal_IdSucursal, Editorial, NumPaginas, CostoPerdida) "
@@ -157,6 +187,84 @@ public class mInicio extends DatabaseErrorHandler {
             Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        
     }
+    
+    public String[] getServer(){
+        Properties prop = new Properties();
+        InputStream is = null;
+        try {
+            is = new FileInputStream("src/File/config");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String suc[] = new String[2];
+        try {
+            prop.load(is);
+            this.ipserver1 = prop.getProperty("IpSucursal");
+            this.passserver1 = prop.getProperty("PassSucursal");
+            this.ipserver2 = prop.getProperty("IpSucursal2");
+            this.passserver2 = prop.getProperty("PassSucursal2");
+            this.ipserver3 = prop.getProperty("IpSucursal2");
+            this.passserver3 = prop.getProperty("PassSucursal2");
+            if(this.statusNetwork1 == true && testConnection(this.ipserver1,this.passserver1)){
+               System.out.println(prop.getProperty("Sucursal"));
+               suc[0] = prop.getProperty("IpSucursal");
+               suc[1] = prop.getProperty("PassSucursal");
+            }
+            else{
+                this.statusNetwork1 = false;
+                net1 = new mInicio(this.ipserver1, this.passserver1);
+                new Thread(net1).start();
+                if(testConnection(this.ipserver2,this.passserver2)){
+                    System.out.println(prop.getProperty("Sucursal2"));
+                   new Thread(net2).start();
+                    suc[0] = prop.getProperty("IpSucursal2");
+                    suc[1] = prop.getProperty("PassSucursal2");
+                }
+                else{
+                    this.statusNetwork2 = false;
+                    net3 = new mInicio(this.ipserver3, this.passserver3);
+                    new Thread(net3).start();
+                    if(testConnection(this.ipserver1,this.passserver1)){
+                        System.out.println(prop.getProperty("Sucursa3"));
+                        System.out.println("Red 3");
+                        suc[0] = prop.getProperty("IpSucursal3");
+                        suc[1] = prop.getProperty("PassSucursal3");
+                    }
+                }
+            }
+            is.close();
+            return suc;
+        } catch (IOException ex) {
+            System.out.println("No se pudo cargar el archivo");
+            return null;
+        }
+    }
+    public mInicio(String ipServer, String pass){
+        this.ipserver1 = ipServer;
+        this.passserver1 = pass; 
+    }
+     public mInicio(){
+         
+    }
+    
+    public boolean testConnection(String server, String pass){
+        Connection con;
+        con = makeConnection(server , pass);
+        System.out.println(con);
+        return con != null;
+    }
+    
+    @Override
+    public void run() {
+        Connection con;
+        con = makeConnection(ipserver1 , passserver1);
+        int x = 0;
+        while(con == null){
+            this.statusNetwork1 = con!=null;
+            //System.out.println("Network: "+this.statusNetwork1);
+        } 
+    }
+    
+    
 }

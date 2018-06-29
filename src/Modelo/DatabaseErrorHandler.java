@@ -7,8 +7,7 @@ import java.util.logging.Logger;
 
 /**
  * Esta clase se encargará de manejar los errores en los servidores de bases 
- * de datos
- */
+ * de datos */
 public class DatabaseErrorHandler {
     Conexion cn = new Conexion();
     protected final String[] passwords = { 
@@ -19,7 +18,7 @@ public class DatabaseErrorHandler {
     
     protected final String[] servers = { 
         "jdbc:mysql://192.168.1.73:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
-        "jdbc:mysql://192.168.43.123:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.1.173:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
         "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull" 
     };
     
@@ -36,11 +35,8 @@ public class DatabaseErrorHandler {
     
     public Connection makeConnection(String server, String pass) {
         Connection con;
-        
             try {
-                int aux;
-
-                con = cn.iniciarConexion(server, pass);
+                con = cn.iniciarConexion("jdbc:mysql://"+server+":3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", pass);
                 return con;
             } catch (SQLException ex) {
                 Logger.getLogger(DatabaseErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
