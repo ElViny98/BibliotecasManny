@@ -204,18 +204,18 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
             this.passserver1 = prop.getProperty("PassSucursal");
             this.ipserver2 = prop.getProperty("IpSucursal2");
             this.passserver2 = prop.getProperty("PassSucursal2");
-            this.ipserver3 = prop.getProperty("IpSucursal2");
-            this.passserver3 = prop.getProperty("PassSucursal2");
+            this.ipserver3 = prop.getProperty("IpSucursal3");
+            this.passserver3 = prop.getProperty("PassSucursal3");
             if(this.statusNetwork1 == true && testConnection(this.ipserver1,this.passserver1)){
+                System.out.println("Conexión 1 falló");
                System.out.println(prop.getProperty("Sucursal"));
                suc[0] = prop.getProperty("IpSucursal");
                suc[1] = prop.getProperty("PassSucursal");
             }
             else{
                 this.statusNetwork1 = false;
-                net1 = new mInicio(this.ipserver1, this.passserver1);
-                new Thread(net1).start();
-                if(testConnection(this.ipserver2,this.passserver2)){
+                new Thread().start();
+                if(this.statusNetwork2 == true && testConnection(this.ipserver2,this.passserver2)){
                     System.out.println(prop.getProperty("Sucursal2"));
                    new Thread(net2).start();
                     suc[0] = prop.getProperty("IpSucursal2");
@@ -223,13 +223,16 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
                 }
                 else{
                     this.statusNetwork2 = false;
-                    net3 = new mInicio(this.ipserver3, this.passserver3);
-                    new Thread(net3).start();
-                    if(testConnection(this.ipserver1,this.passserver1)){
+                    System.out.println("Conexión 2 falló");
+                    new Thread().start();
+                    if(statusNetwork3 == true &&testConnection(this.ipserver1,this.passserver1)){
                         System.out.println(prop.getProperty("Sucursa3"));
-                        System.out.println("Red 3");
                         suc[0] = prop.getProperty("IpSucursal3");
                         suc[1] = prop.getProperty("PassSucursal3");
+                    }
+                    else{
+                        System.out.println("Todas las redes estan caidas");
+                        this.statusNetwork3 = false;
                     }
                 }
             }
@@ -240,13 +243,13 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
             return null;
         }
     }
-    public mInicio(String ipServer, String pass){
-        this.ipserver1 = ipServer;
-        this.passserver1 = pass; 
-    }
-     public mInicio(){
-         
-    }
+//    public mInicio(String ipServer, String pass){
+//        this.ipserver1 = ipServer;
+//        this.passserver1 = pass; 
+//    }
+//     public mInicio(){
+//         
+//    }
     
     public boolean testConnection(String server, String pass){
         Connection con;
@@ -258,10 +261,28 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
     @Override
     public void run() {
         Connection con;
-        con = makeConnection(ipserver1 , passserver1);
+        con = null;
         int x = 0;
         while(con == null){
-            this.statusNetwork1 = con!=null;
+            if(!this.statusNetwork1){
+                con = makeConnection(this.ipserver1 , this.passserver1);
+                if(con != null){
+                    System.out.println("Se supone que ya prendió ptm >:c");
+                    statusNetwork1 = true;
+                }
+            }
+            else if(!this.statusNetwork2){
+                con = makeConnection(this.ipserver2 , this.passserver2);
+                if(con != null){
+                    statusNetwork2 = true;
+                }
+            }
+            else if(!this.statusNetwork3){
+                con = makeConnection(this.ipserver3 , this.passserver3);
+                if(con != null){
+                    statusNetwork3 = true;
+                }
+            }
             //System.out.println("Network: "+this.statusNetwork1);
         } 
     }
