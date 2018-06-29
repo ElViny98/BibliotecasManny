@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 public class cInicio implements ActionListener{
@@ -33,6 +34,7 @@ public class cInicio implements ActionListener{
         
         vS.btnAceptar.addActionListener(this);
         this.vI.btnAgregar.addActionListener(this);
+        this.vI.btnCancelarAdd.addActionListener(this);
         this.vI.btnPrestamo.addActionListener(this);
         this.vI.btnInventario.addActionListener(this);
         this.vI.btnHistorial.addActionListener(this);
@@ -42,11 +44,21 @@ public class cInicio implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.vI.btnGuardar) {
-            this.mI.insertarLibro(this.vI.txtTitLibro.getText(), this.vI.txtAutLibro.getText(),
+            boolean insercion = this.mI.insertarLibro(this.vI.txtTitLibro.getText(), this.vI.txtAutLibro.getText(),
                     this.vI.txtPublic.getText(), this.vI.cmbGeneros.getSelectedItem().toString(),
-                    this.vI.txtNumCopias.getText(), this.vI.txtNumPaginas.getText());
+                    this.vI.txtNumCopias.getText(), this.sucursal, this.vI.txtEditorial.getText(),
+                    this.vI.txtNumPaginas.getText(), this.vI.txtNumPaginas1.getText());
+            if(insercion){
+                JOptionPane.showMessageDialog(this.vI,"El libro se ha agregado correctamente");
+                limpiarInputsAdd();
+            }
+            else{
+                JOptionPane.showMessageDialog(this.vI,"No se ha podido agregar el libro, intente de nuevo");
+            }
         }
-        
+        if(e.getSource() == this.vI.btnCancelarAdd){
+            limpiarInputsAdd();
+        }
         if(e.getSource() == this.vI.btnAgregar) {
             this.vI.pnlHistorial.setVisible(false);
             this.vI.pnlAgregar.setVisible(true);
@@ -60,6 +72,7 @@ public class cInicio implements ActionListener{
             this.vI.pnlPrestamos.setVisible(true);
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlAgregar.setVisible(false);
+            this.vI.tblPrestamos.setModel(mI.getPrestamos(0));
         }
         
         if(e.getSource() == this.vI.btnHistorial) {
@@ -67,6 +80,7 @@ public class cInicio implements ActionListener{
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlPrestamos.setVisible(false);
             this.vI.pnlInventario.setVisible(false);
+            this.vI.tblHistorial.setModel(mI.getPrestamos(1));
         }
         
         if(e.getSource() == this.vS.btnAceptar){
@@ -147,8 +161,8 @@ public class cInicio implements ActionListener{
                 System.out.println("");
             }
             else{
-                sucursal = leerFichero();
-                if(sucursal!=null){
+                this.sucursal = leerFichero();
+                if(this.sucursal!=null){
                     this.vI.tblHistorial.setRowHeight(50);
                     this.vI.tblInventario.setRowHeight(50);
                     this.vI.pnlPrestamos.setVisible(false);
@@ -160,8 +174,19 @@ public class cInicio implements ActionListener{
                     this.vI.setResizable(false);
                     this.vI.setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
                 }
-                System.out.println(sucursal);
+                System.out.println(this.sucursal);
             }
         } catch (IOException ex) {}
+    }
+    
+    public void limpiarInputsAdd(){
+        this.vI.txtAutLibro.setText("");
+        this.vI.txtNumPaginas1.setText("");
+        this.vI.txtEditorial.setText("");
+        this.vI.txtNumCopias.setText("");
+        this.vI.txtNumPaginas.setText("");
+        this.vI.txtPublic.setText("");
+        this.vI.txtTitLibro.setText("");
+        this.vI.cmbGeneros.setSelectedItem(0);
     }
 }

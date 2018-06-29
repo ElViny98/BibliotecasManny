@@ -18,15 +18,15 @@ public class DatabaseErrorHandler {
     };
     
     protected final String[] servers = { 
-        "jdbc:mysql://172.16.1.21:3306/Biblioteca_Manny", 
-        "jdbc:mysql://192.168.43.123:3306/Biblioteca_Manny", 
-        "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny" 
+        "jdbc:mysql://192.168.1.73:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.43.123:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull" 
     };
     
     public Connection firstConnection(String server, String pass) {
         Connection con;
         try {
-            con = cn.iniciarConexion(server, pass);
+            con = cn.iniciarConexion(server, pass);            
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseErrorHandler.class.getName()).log(Level.SEVERE, null, ex);
             return null;
