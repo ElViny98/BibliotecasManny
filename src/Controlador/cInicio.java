@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.mInicio;
 import Vista.vInicio;
+import Vista.vPrestamos;
 import Vista.vSucursal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,10 +41,17 @@ public class cInicio implements ActionListener{
         this.vI.btnInventario.addActionListener(this);
         this.vI.btnHistorial.addActionListener(this);
         this.vI.btnGuardar.addActionListener(this);
+        this.vI.btnAgregarPrestamo.addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.vI.btnAgregarPrestamo) {
+            vPrestamos vP = new vPrestamos();
+            cPrestamo cP = new cPrestamo(vP, mI);
+            cP.iniciarVista();
+        }
+        
         if(e.getSource() == this.vI.btnGuardar) {
             boolean insercion = this.mI.insertarLibro(this.vI.txtTitLibro.getText(), this.vI.txtAutLibro.getText(),
                     this.vI.txtPublic.getText(), this.vI.cmbGeneros.getSelectedItem().toString(),
@@ -88,6 +96,7 @@ public class cInicio implements ActionListener{
             try {
                 escribirFichero(new File("src/File/config"));
                 iniciarVista();
+                vS.dispose();
             } catch (UnsupportedEncodingException ex) {}
         }
         
@@ -193,6 +202,7 @@ public class cInicio implements ActionListener{
             else{
                 this.sucursal = leerFichero();
                 if(this.sucursal!=null){
+                    this.vI.tblPrestamos.setRowHeight(50);
                     this.vI.tblHistorial.setRowHeight(50);
                     this.vI.tblInventario.setRowHeight(50);
                     this.vI.pnlPrestamos.setVisible(false);

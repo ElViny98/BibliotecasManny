@@ -11,13 +11,13 @@ import java.util.logging.Logger;
 public class DatabaseErrorHandler {
     Conexion cn = new Conexion();
     protected final String[] passwords = { 
-        "", 
+        "1234567", 
         "1234567", 
         "1234567" 
     };
     
     protected final String[] servers = { 
-        "jdbc:mysql://localhost:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.1.77:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
         "jdbc:mysql://192.168.1.173:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
         "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull" 
     };

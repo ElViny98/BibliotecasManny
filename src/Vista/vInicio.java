@@ -69,6 +69,7 @@ public class vInicio extends javax.swing.JFrame {
         chkTitulo = new javax.swing.JCheckBox();
         cmbNombres = new javax.swing.JComboBox<>();
         cmbTitulo = new javax.swing.JComboBox<>();
+        btnAgregarPrestamo = new javax.swing.JButton();
         pnlInventario = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -424,6 +425,11 @@ public class vInicio extends javax.swing.JFrame {
         cmbTitulo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnAgregarPrestamo.setBackground(new java.awt.Color(27, 50, 87));
+        btnAgregarPrestamo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        btnAgregarPrestamo.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarPrestamo.setText("Nuevo préstamo");
+
         javax.swing.GroupLayout pnlPrestamosLayout = new javax.swing.GroupLayout(pnlPrestamos);
         pnlPrestamos.setLayout(pnlPrestamosLayout);
         pnlPrestamosLayout.setHorizontalGroup(
@@ -444,7 +450,10 @@ public class vInicio extends javax.swing.JFrame {
                     .addGroup(pnlPrestamosLayout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrestamosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAgregarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlPrestamosLayout.setVerticalGroup(
@@ -465,7 +474,9 @@ public class vInicio extends javax.swing.JFrame {
                     .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(chkNombre)
                         .addComponent(cmbNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 191, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(btnAgregarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
 
         getContentPane().add(pnlPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 950, 550));
@@ -605,6 +616,7 @@ public class vInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregar;
+    public javax.swing.JButton btnAgregarPrestamo;
     public javax.swing.JButton btnCancelarAdd;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnHistorial;
