@@ -1,9 +1,9 @@
-Sucursal:Biblioteca el Aldas
-IpSucursal:192.168.1.73
-PassSucursal:1234567
-Sucursal2:BiblioVini
-IpSucursal2:192.168.4.73
+Sucursal:BiblioVini
+IpSucursal:localhost
+PassSucursal:
+Sucursal2:BiblioBryan
+IpSucursal2:192.168.1.74
 PassSucursal2:1234567
-Sucursal3:BiblioBryan
-IpSucursal3:192.168.1.74
+Sucursal3:Biblioteca el Aldas
+IpSucursal3:192.168.1.73
 PassSucursal3:1234567

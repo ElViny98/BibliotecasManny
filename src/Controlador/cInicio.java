@@ -80,6 +80,7 @@ public class cInicio implements ActionListener{
             this.vI.pnlInicio.setVisible(false);
             this.vI.pnlPrestamos.setVisible(false);
             this.vI.pnlInventario.setVisible(false);
+            mI.modificarLibros("He-man","Stephen","1988","Terror","2","5","BiblioVini","Genaro","500","300","3");
             this.vI.tblHistorial.setModel(mI.getPrestamos(1));
         }
         

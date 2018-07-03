@@ -134,6 +134,22 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
         }
     }
     
+    public DefaultTableModel getClientes(){
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            String[] txtModelo = new String[]{"ID", "Nombre" , "Dirección", "Teléfono"};
+            ResultSet rS = st.executeQuery("SELECT * FROM cliente");
+            return tableModel(rS, txtModelo);
+        }
+        catch(Exception e){
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
     public DefaultTableModel tableModel(ResultSet rs, String ... arrayModelo){
         DefaultTableModel modelo = new DefaultTableModel();
         for (String arrayModelo1 : arrayModelo) {
@@ -188,6 +204,117 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
             return false;
         }
     }
+    /**
+     * Esta madre no lo combine con insertar libros como en clientes porque hay más pedos en las variables 
+     * <br>
+     * <ul>
+     * <li>0: Titulo</li>
+     * <li>1: Autor</li>
+     * <li>2: Anio</li>
+     * <li>3: Genero</li>
+     * <li>4: Copias Prestadas</li>
+     * <li>5: Total Copias</li>
+     * <li>6: Sucursal(Nombre)</li>
+     * <li>7: Editorial</li>
+     * <li>8: Num. Paginas</li>
+     * <li>9: Costo Perdida</li>
+     * <li>10: IdLibro</li>
+     * </ul>
+     * @param datos
+     * @return 
+     */
+    public boolean modificarLibros(String...datos){
+        String txtSQL = "UPDATE libro "
+                + "SET Titulo = '"+datos[0]+"', "
+                + "Autor = '"+datos[1]+"', "
+                + "Anio = '"+datos[2]+"', "
+                + "Genero = '"+datos[3]+"', "
+                + "CopiasPrestadas = '"+datos[4]+"', "
+                + "TotalCopias = '"+datos[5]+"', "
+                + "Sucursal_IdSucursal = (SELECT IdSucursal FROM sucursal WHERE Nombre='"+datos[6]+"'), "
+                + "Editorial = '"+datos[7]+"', "
+                + "NumPaginas = '"+datos[8]+"', "
+                + "CostoPerdida = '"+datos[9]+"' "
+                + "WHERE IdLibro = "+datos[10]+"";
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate(txtSQL);
+            cn.cerrarConexion(con);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    /**
+     * Parametros <br>
+     * <ul>
+     * <li>1) 1.Para agregar. 2.Modificar.</li>
+     * <li>2) Nombre</li>
+     * <li>3) Direccion</li>
+     * <li>4) Cliente</li> 
+     * <li>5) ID (Solo cuando va a modificar)</li>
+     * </ul>
+     * @param opc
+     * @param datos
+     * @return 
+     */
+    public boolean insertarCliente(int opc, String... datos) {
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        String txtSQL = "";
+        //con = makeConnection("localhost", "");
+        if(opc==1){
+            txtSQL = "INSERT INTO cliente(Nombre, Direccion, Telefono) VALUES('"+datos[0]+"', '"+datos[1]+"', '"+datos[2]+"')";
+        }
+        else if(opc==2){
+            txtSQL = "UPDATE cliente SET Nombre = '"+datos[0]+"', Direccion = '"+datos[1]+"', Telefono = '"+datos[2]+"' WHERE IdCliente = "+datos[3]+"";
+        }
+        try {
+            Statement st = con.createStatement();
+            if("".equals(txtSQL))
+                return false;
+            else{
+                st.executeUpdate(txtSQL);
+            }
+            cn.cerrarConexion(con);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    /**
+     * Para eliminar lo que sea
+     * <ul>
+     * <li>1) Nombre de la tabla </li>
+     * <li>2) Nombre de la columna ID </li>
+     * <li>3) ID a eliminar </li>
+     * </ul>
+     * @param tabla
+     * @param idColumn
+     * @param id
+     * @return 
+     */
+    public boolean eliminar(String tabla, String idColumn, int id){
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("DELETE FROM "+tabla+" WHERE "+idColumn+"="+id+"");
+            cn.cerrarConexion(con);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     
     public String[] getServer(){
         Properties prop = new Properties();
@@ -243,6 +370,7 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
             return null;
         }
     }
+
 //    public mInicio(String ipServer, String pass){
 //        this.ipserver1 = ipServer;
 //        this.passserver1 = pass; 
