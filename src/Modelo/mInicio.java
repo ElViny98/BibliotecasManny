@@ -422,6 +422,25 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
         return con != null;
     }
     
+    /**
+     * 0.- Nombre <br>
+     * 1.- Dirección <br>
+     * 2.- Teléfono <br>
+     * @param datos 
+     */
+    public void insertarCliente(String... datos) {
+        String[] suc = getServer();
+        Connection con;
+        con = firstConnection(suc[0], suc[1]);
+        
+        try {
+            Statement st = con.createStatement();
+            st.execute("INSERT INTO Cliente VALUES(null, "+ datos[0] +", "+ datos[1] +", "+datos[2]+");");
+        } catch (SQLException ex) {
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public void run() {
         Connection con;
