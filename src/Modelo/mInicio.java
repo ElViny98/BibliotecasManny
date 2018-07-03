@@ -150,6 +150,42 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
         }
     }
     
+     public DefaultTableModel getNombreClientes(){
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            String[] txtModelo = new String[]{"Nombre"};
+            ResultSet rS = st.executeQuery("SELECT Nombre FROM cliente ORDER BY IdCliente ASC LIMIT 1;");
+            return tableModel(rS, txtModelo);
+        }
+        catch(Exception e){
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
+     public DefaultTableModel getNombreLibro(){
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            String[] txtModelo = new String[]{"Titulo"};
+            ResultSet rS = st.executeQuery("SELECT Titulo FROM libro ORDER BY titulo ASC ");
+            return tableModel(rS, txtModelo);
+        }
+        catch(Exception e){
+            Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+      
+    
+    
+    
+    
     public DefaultTableModel tableModel(ResultSet rs, String ... arrayModelo){
         DefaultTableModel modelo = new DefaultTableModel();
         for (String arrayModelo1 : arrayModelo) {
