@@ -91,15 +91,16 @@ public class vPrestamos extends javax.swing.JFrame {
 
         tblLibro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1"
             }
         ));
+        tblLibro.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblLibro);
 
         btnGuardar.setBackground(new java.awt.Color(20, 50, 87));

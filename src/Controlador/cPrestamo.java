@@ -46,6 +46,10 @@ public class cPrestamo implements ActionListener {
             this.vP.pnlCliente.setVisible(!true);
             this.vP.pnlDatos.setVisible(true);
         }
+        
+        if(e.getSource() == this.vP.btnAgregar) {
+            this.mI.insertarCliente(this.vP.txtNombre.getText(), this.vP.txtDireccion.getText(), this.vP.txtTelefono.getText());
+        }
     }
     
 }
