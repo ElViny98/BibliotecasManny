@@ -64,11 +64,6 @@ public class vInicio extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrestamos = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        chkNombre = new javax.swing.JCheckBox();
-        chkTitulo = new javax.swing.JCheckBox();
-        cmbNombres = new javax.swing.JComboBox<>();
-        cmbTitulo = new javax.swing.JComboBox<>();
         btnAgregarPrestamo = new javax.swing.JButton();
         pnlInventario = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -409,22 +404,6 @@ public class vInicio extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jLabel13.setText("Préstamos actuales:");
 
-        jLabel14.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Buscar por:");
-
-        chkNombre.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        chkNombre.setText("Nombre:");
-
-        chkTitulo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        chkTitulo.setText("Título:");
-
-        cmbNombres.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        cmbNombres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbTitulo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        cmbTitulo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnAgregarPrestamo.setBackground(new java.awt.Color(27, 50, 87));
         btnAgregarPrestamo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnAgregarPrestamo.setForeground(new java.awt.Color(255, 255, 255));
@@ -440,17 +419,8 @@ public class vInicio extends javax.swing.JFrame {
                 .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
                     .addGroup(pnlPrestamosLayout.createSequentialGroup()
-                        .addComponent(chkNombre)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chkTitulo)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrestamosLayout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrestamosLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAgregarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -463,18 +433,8 @@ public class vInicio extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel14)
-                .addGap(18, 18, 18)
-                .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(chkTitulo)
-                        .addComponent(cmbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(chkNombre)
-                        .addComponent(cmbNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(btnAgregarPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -622,17 +582,12 @@ public class vInicio extends javax.swing.JFrame {
     public javax.swing.JButton btnHistorial;
     public javax.swing.JButton btnInventario;
     public javax.swing.JButton btnPrestamo;
-    public javax.swing.JCheckBox chkNombre;
-    public javax.swing.JCheckBox chkTitulo;
     public javax.swing.JComboBox<String> cmbGeneros;
-    public javax.swing.JComboBox<String> cmbNombres;
-    public javax.swing.JComboBox<String> cmbTitulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

@@ -157,7 +157,7 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
         try {
             Statement st = con.createStatement();
             String[] txtModelo = new String[]{"Nombre"};
-            ResultSet rS = st.executeQuery("SELECT Nombre FROM cliente ORDER BY IdCliente ASC LIMIT 1;");
+            ResultSet rS = st.executeQuery("SELECT Nombre FROM cliente ORDER BY IdCliente ASC;");
             return tableModel(rS, txtModelo);
         }
         catch(Exception e){
@@ -442,14 +442,18 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
     public void insertarCliente(String... datos) {
         String[] suc = getServer();
         Connection con;
-        con = firstConnection(suc[0], suc[1]);
+        con = makeConnection(suc[0], suc[1]);
         
         try {
             Statement st = con.createStatement();
-            st.execute("INSERT INTO Cliente VALUES(null, "+ datos[0] +", "+ datos[1] +", "+datos[2]+");");
+            st.execute("INSERT INTO cliente VALUES(null, '"+ datos[0] +"', '"+ datos[1] +"', '"+datos[2]+"');");
         } catch (SQLException ex) {
             Logger.getLogger(mInicio.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void crearPrestamo(String nombreCliente, String tituloLibro) {
+        
     }
     
     @Override
