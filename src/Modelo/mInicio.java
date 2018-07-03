@@ -182,7 +182,18 @@ public class mInicio extends DatabaseErrorHandler implements Runnable {
         }
     }
       
-    
+    public void hacerPrestamo(String nombreLibro) throws SQLException {
+        Connection con;
+        String[] suc = getServer();
+        con = makeConnection(suc[0], suc[1]);
+        try {
+            Statement st = con.createStatement();
+            st.execute("UPDATE libro SET TotalCopias = TotalCopias - 1 WHERE titulo = '" + nombreLibro + "'; ");
+            st.execute("UPDATE libro SET TotalCopias = CopiasPrestadas + 1 WHERE titulo = '" + nombreLibro + "'; ");
+        }catch(SQLException e) {
+            
+        }
+    }
     
     
     

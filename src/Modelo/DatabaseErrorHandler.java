@@ -17,9 +17,9 @@ public class DatabaseErrorHandler {
     };
     
     protected final String[] servers = { 
-        "jdbc:mysql://192.168.1.77:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
-        "jdbc:mysql://192.168.1.173:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
-        "jdbc:mysql://192.168.43.23:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull" 
+        "jdbc:mysql://192.168.43.215:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.43.91:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull", 
+        "jdbc:mysql://192.168.43.37:3306/Biblioteca_Manny?zeroDateTimeBehavior=convertToNull" 
     };
     
     public Connection firstConnection(String server, String pass) {
