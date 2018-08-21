@@ -46,6 +46,11 @@ public class vSucursal extends javax.swing.JFrame {
 
         comboSucursales.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         comboSucursales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSucursales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSucursalesActionPerformed(evt);
+            }
+        });
 
         btnAceptar.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -110,6 +115,10 @@ public class vSucursal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSucursalesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboSucursalesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
